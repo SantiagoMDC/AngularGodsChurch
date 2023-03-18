@@ -1,0 +1,26 @@
+{
+	"data": [
+		{
+			"id": "1000",
+			"nombre": "Martin David",
+			"apellido": "Santiago Contreras",
+			"edad": 23,
+            "telefono": 3214798428,
+            "direccion": "Calle 5 #15E-56",
+            "miembroStatus": "ACTIVO",
+			"categoria": "Servidor"
+			
+		},
+		{
+			"id": "1001",
+			"nombre": "Nestor Enrique",
+			"apellido": "Ustariz Andrade",
+			"edad": 25,
+            "telefono": 3002764234,
+            "direccion": "Calle 11 #32-58",
+            "miembroStatus": "INACTIVO",
+			"categoria": "Bautizado"
+			
+		}
+    ]
+}
