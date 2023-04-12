@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Console, log } from 'console';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { Miembro } from 'src/app/demo/api/miembro';
 import { MiembroService } from 'src/app/demo/service/miembro.service';
+
+
 
 @Component({
  
@@ -37,6 +40,7 @@ export class MiembroComponent implements OnInit{
       this.miembroService.getMiembros().then(data => this.miembros = data);
 
       this.cols = [
+          { field: 'id', header: 'Id'},
           { field: 'nombre', header: 'Nombre' },
           { field: 'apellido', header: 'Apelllido' },
           { field: 'edad', header: 'Edad'},
@@ -99,16 +103,23 @@ export class MiembroComponent implements OnInit{
 
       if (this.miembro.nombre?.trim()) {
           if (this.miembro.id) {
-              // @ts-ignore
-              this.miembro.miembroStatus = this.miembro.miembroStatus.value ? this.miembro.miembroStatus.value : this.miembro.miembroStatus;
-              this.miembros[this.findIndexById(this.miembro.id)] = this.miembro;
-              this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Miembro Updated', life: 3000 });
-          } else {
-              this.miembro.id = this.createId();
-              // @ts-ignore
-              this.miembro.miembroStatus = this.miembro.miembroStatus ? this.miembro.miembroStatus.value : 'ACTIVO';
-              this.miembros.push(this.miembro);
-              this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Miembro Created', life: 3000 });
+              if (this.findIndexById(this.miembro.id) === -1) {
+
+                  // @ts-ignore
+                  this.miembro.miembroStatus = this.miembro.miembroStatus.value ? this.miembro.miembroStatus.value : this.miembro.miembroStatus;
+                  this.miembros.push(this.miembro);
+                  this.miembroService.postMiembro(this.miembro);
+                  this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Miembro Created', life: 3000 });
+                   
+              } else {
+                  // @ts-ignore
+
+                  this.miembro.miembroStatus = this.miembro.miembroStatus.value ? this.miembro.miembroStatus.value : this.miembro.miembroStatus;
+                  this.miembros[this.findIndexById(this.miembro.id)] = this.miembro;
+                  this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Miembro Updated', life: 3000 });
+                  
+              }
+              
           }
 
           this.miembros = [...this.miembros];

@@ -1,0 +1,18 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\demo",
+    "\\src\\app\\demo\\api",
+    "\\src\\app\\demo\\components",
+    "\\src\\app\\demo\\components\\pages",
+    "\\src\\app\\demo\\components\\pages\\miembro",
+    "\\src\\app\\demo\\service",
+    "\\src\\assets",
+    "\\src\\assets\\demo",
+    "\\src\\assets\\demo\\data"
+  ],
+  "SelectedNode": "\\src\\app\\demo\\components\\pages\\crud\\crud-routing.module.ts",
+  "PreviewInSolutionExplorer": false
+}

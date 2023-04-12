@@ -30,6 +30,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
 import { CrudRoutingModule } from './demo/components/pages/crud/crud-routing.module';
 import { MiembroService } from './demo/service/miembro.service';
+import { FinanzaService } from './demo/service/finanza.service';
 
 @NgModule({
     declarations: [
@@ -58,7 +59,7 @@ import { MiembroService } from './demo/service/miembro.service';
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService, MiembroService
+        PhotoService, ProductService, MiembroService,FinanzaService
     ],
     bootstrap: [AppComponent]
 })

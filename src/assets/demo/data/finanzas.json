@@ -1,0 +1,21 @@
+{
+	"data": [
+		{
+			"codigo": "1000",
+			"descripcion": "ofrenda pro construccion",
+			"valor": 53000,
+			"fecha": "2023-02-28",
+            "tipo": "Ingreso"
+            
+			
+		},
+		{
+			"codigo": "1001",
+			"descripcion": "compra de cemento",
+			"valor": 30000,
+			"fecha": "2023-03-28",
+            "tipo": "Egreso"
+			
+		}
+    ]
+}

@@ -21,6 +21,14 @@ export class MiembroService {
             .then(data => data);
     }
 
+    postMiembro(miembro: Miembro) {
+        return this.http.post<any>('assets/demo/data/miembros.json', miembro)
+        .toPromise()
+        .then(res => res.data as Miembro[])
+        .then(data => data);
+      }
+      
+
     getMiembroMixed() {
         return this.http.get<any>('assets/demo/data/miembros.json')
             .toPromise()

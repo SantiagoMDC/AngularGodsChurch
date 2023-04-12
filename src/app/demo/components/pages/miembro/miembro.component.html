@@ -54,6 +54,7 @@
                 responsiveLayout="scroll"
                 [rows]="10"
                 [globalFilterFields]="[
+                     'id',
                     'nombre',
                     'apellido'
                 ]"
@@ -216,7 +217,7 @@
                     <small
                         class="ng-dirty ng-invalid"
                         *ngIf="submitted && !miembro.id"
-                        >Name is required.</small
+                        >Id is required.</small
                     >
                 </div>
                 <div class="field">

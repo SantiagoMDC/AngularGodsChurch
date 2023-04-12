@@ -1,6 +1,7 @@
 .customer-badge,
 .product-badge,
 .miembro-badge,
+.finanza-badge,
 .order-badge {
     border-radius: var(--border-radius);
     padding: .25em .5rem;
@@ -42,6 +43,20 @@
         color: #8A5340;
     }
 }
+.finanza-badge {
+    &.status-ingreso {
+        background: #C8E6C9;
+        color: #256029;
+    }
+
+    &.status-egreso {
+        background: #FFCDD2;
+        color: #C63737;
+    }
+
+}
+
+
 
 .customer-badge {
     &.status-qualified {
