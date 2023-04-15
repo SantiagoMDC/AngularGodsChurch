@@ -92,9 +92,9 @@ export class AppMenuComponent implements OnInit {
                         routerLink: ['/pages/miembro']
                     },
                     {
-                        label: 'Not Found',
+                        label: 'Directivas',
                         icon: 'pi pi-fw pi-exclamation-circle',
-                        routerLink: ['/notfound']
+                        routerLink: ['/pages/directiva']
                     },
                     {
                         label: 'Finanzas',
