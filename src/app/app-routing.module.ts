@@ -2,10 +2,17 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { NotfoundComponent } from './demo/components/notfound/notfound.component';
 import { AppLayoutComponent } from "./layout/app.layout.component";
+import { LoginComponent } from './demo/components/auth/login/login.component';
 
 @NgModule({
     imports: [
         RouterModule.forRoot([
+            {
+                path: 'login', redirectTo: 'login', pathMatch: 'full'
+            },
+            {
+                path: 'login', component: LoginComponent
+            },
             {
                 path: '', component: AppLayoutComponent,
                 children: [

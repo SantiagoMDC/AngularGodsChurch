@@ -31,6 +31,7 @@ import { DialogModule } from 'primeng/dialog';
 import { CrudRoutingModule } from './demo/components/pages/crud/crud-routing.module';
 import { MiembroService } from './demo/service/miembro.service';
 import { FinanzaService } from './demo/service/finanza.service';
+import { LoginRoutingModule } from './demo/components/auth/login/login-routing.module';
 
 @NgModule({
     declarations: [
@@ -41,6 +42,7 @@ import { FinanzaService } from './demo/service/finanza.service';
         AppLayoutModule,
         CommonModule,
         CrudRoutingModule,
+        LoginRoutingModule,
         TableModule,
         FileUploadModule,
         FormsModule,
