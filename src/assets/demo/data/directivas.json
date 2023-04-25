@@ -1,0 +1,32 @@
+
+    {
+        "data": [
+            {
+                "codigo": "1000",
+                "nombre": "Jovenes",
+                "lider": "Jose Perez",
+                "sublider": "Carlos Pardo",
+                "secretario": "Juan Benitez",
+                "tesorero": "Andres Cuello",
+                "vocal1": "Pedro Correa",
+                "vocal2": "Ana Molina",
+                "vocal3": "Olga Reyes",
+                "nota": ""
+                
+                
+            },
+            {
+                "codigo": "1001",
+                "nombre": "Evangelismo",
+                "lider": "Jose Perez",
+                "sublider": "Carlos Pardo",
+                "secretario": "Juan Benitez",
+                "tesorero": "Andres Cuello",
+                "vocal1": "Pedro Correa",
+                "vocal2": "Ana Molina",
+                "vocal3": "Olga Reyes",
+                "nota": ""
+                
+            }
+        ]
+    }

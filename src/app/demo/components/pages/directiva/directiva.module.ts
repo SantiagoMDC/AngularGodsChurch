@@ -15,6 +15,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
 import { DirectivaComponent } from './directiva.component';
+import { DirectivaRoutingModule } from './directiva-.routing.module';
 
 @NgModule({
     imports: [
@@ -32,7 +33,8 @@ import { DirectivaComponent } from './directiva.component';
         DropdownModule,
         RadioButtonModule,
         InputNumberModule,
-        DialogModule
+        DialogModule,
+        DirectivaRoutingModule
     ],
     declarations: [DirectivaComponent]
 })

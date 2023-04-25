@@ -1,0 +1,407 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button
+                            pButton
+                            pRipple
+                            label="New"
+                            icon="pi pi-plus"
+                            class="p-button-success mr-2"
+                            (click)="openNew()"
+                        ></button>
+                        <button
+                            pButton
+                            pRipple
+                            label="Delete"
+                            icon="pi pi-trash"
+                            class="p-button-danger"
+                            (click)="deleteSelectedDirectivas()"
+                            [disabled]="
+                                !selectedDirectivas || !selectedDirectivas.length
+                            "
+                        ></button>
+                    </div>
+                </ng-template>
+
+                
+            </p-toolbar>
+
+            <p-table
+                #dt
+                [value]="directivas"
+                [columns]="cols"
+                responsiveLayout="scroll"
+                [rows]="10"
+                [globalFilterFields]="[
+                    'nombre'
+                ]"
+                [rows]="10"
+                [paginator]="true"
+                [rowsPerPageOptions]="[10, 20, 30]"
+                [showCurrentPageReport]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [(selection)]="selectedDirectivas"
+                selectionMode="multiple"
+                [rowHover]="true"
+                dataKey="id"
+            >
+                <ng-template pTemplate="caption">
+                    <div
+                        class="flex flex-column md:flex-row md:justify-content-between md:align-items-center"
+                    >
+                        <h5 class="m-0">Manage Directivas</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input
+                                pInputText
+                                type="text"
+                                (input)="onGlobalFilter(dt, $event)"
+                                placeholder="Search..."
+                                class="w-full sm:w-auto"
+                            />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                       
+                        <th pSortableColumn="nombre">
+                            Nombre <p-sortIcon field="nombre"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="lider">
+                            Lider <p-sortIcon field="lider"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="sublider">
+                            SubLider <p-sortIcon field="sublider"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="secretario">
+                            Secretario <p-sortIcon field="secretario"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="tesorero">
+                            Tesorero <p-sortIcon field="tesorero"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="vocal1">
+                            Vocal 1 <p-sortIcon field="vocal1"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="vocal2">
+                            Vocal 2 <p-sortIcon field="vocal2"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="vocal3">
+                            Vocal 3 <p-sortIcon field="vocal3"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="nota">
+                            Nota <p-sortIcon field="nota"></p-sortIcon>
+                        </th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-directiva>
+                    <tr>
+                        <td>
+                            <p-tableCheckbox
+                                [value]="directiva"
+                            ></p-tableCheckbox>
+                        </td>
+                        
+                        <td style="width: 14%; min-width: 10rem">
+                            <span class="p-column-title">Nombre</span>
+                            {{ directiva.nombre }}
+                        </td>
+                        <td style="width: 14%; min-width: 10rem">
+                            <span class="p-column-title">Lider</span>
+                            {{ directiva.lider }}
+                        </td>
+                        <td style="width: 14%; min-width: 10rem">
+                            <span class="p-column-title">SubLider</span>
+                            {{ directiva.sublider }}
+                        </td>
+                        <td style="width: 14%; min-width: 10rem">
+                            <span class="p-column-title">Secretario</span>
+                            {{ directiva.secretario }}
+                        </td>
+                        <td style="width: 14%; min-width: 10rem">
+                            <span class="p-column-title">Tesorero</span>
+                            {{ directiva.tesorero }}
+                        </td>
+                        <td style="width: 14%; min-width: 10rem">
+                            <span class="p-column-title">Vocal 1</span>
+                            {{ directiva.vocal1 }}
+                        </td>
+                        <td style="width: 14%; min-width: 10rem">
+                            <span class="p-column-title">Vocal 2</span>
+                            {{ directiva.vocal2 }}
+                        </td>
+                        <td style="width: 14%; min-width: 10rem">
+                            <span class="p-column-title">Vocal 3</span>
+                            {{ directiva.vocal3 }}
+                        </td>
+                        <td style="width: 20%; min-width: 10rem">
+                            <span class="p-column-title">Nota</span>
+                            {{ directiva.nota }}
+                        </td>
+                        <td>
+                            <div class="flex">
+                                <button
+                                    pButton
+                                    pRipple
+                                    icon="pi pi-pencil"
+                                    class="p-button-rounded p-button-success mr-2"
+                                    (click)="editDirectiva(directiva)"
+                                ></button>
+                                <button
+                                    pButton
+                                    pRipple
+                                    icon="pi pi-trash"
+                                    class="p-button-rounded p-button-warning"
+                                    (click)="deleteDirectiva(directiva)"
+                                ></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <p-dialog
+            [(visible)]="directivaDialog"
+            [style]="{ width: '450px' }"
+            header="Directiva Details"
+            [modal]="true"
+            class="p-fluid"
+        >
+            <ng-template pTemplate="content">
+                
+                <div class="field">
+                    <label for="nombre">Nombre</label>
+                    <input
+                        type="text"
+                        pInputText
+                        id="nombre"
+                        [(ngModel)]="directiva.nombre"
+                        required
+                        autofocus
+                        [ngClass]="{
+                            'ng-invalid ng-dirty': submitted && !directiva.nombre
+                        }"
+                    />
+                    <small
+                        class="ng-dirty ng-invalid"
+                        *ngIf="submitted && !directiva.nombre"
+                        >Nombre is required.</small
+                    >
+                </div>
+                <div class="field">
+                    <label for="lider">Lider</label>
+                    <input
+                        type="text"
+                        pInputText
+                        id="lider"
+                        [(ngModel)]="directiva.lider"
+                        required
+                        autofocus
+                        [ngClass]="{
+                            'ng-invalid ng-dirty': submitted && !directiva.lider
+                        }"
+                    />
+                    <small
+                        class="ng-dirty ng-invalid"
+                        *ngIf="submitted && !directiva.lider"
+                        >Lider is required.</small
+                    >
+                </div>
+                <div class="field">
+                    <label for="sublider">sublider</label>
+                    <input
+                        type="text"
+                        pInputText
+                        id="sublider"
+                        [(ngModel)]="directiva.sublider"
+                        
+                    />
+                    
+                </div>
+                <div class="field">
+                    <label for="secretario">Secretario</label>
+                    <input
+                        type="text"
+                        pInputText
+                        id="secretario"
+                        [(ngModel)]="directiva.secretario"
+                        required
+                        autofocus
+                        [ngClass]="{
+                            'ng-invalid ng-dirty': submitted && !directiva.secretario
+                        }"
+                    />
+                    <small
+                        class="ng-dirty ng-invalid"
+                        *ngIf="submitted && !directiva.secretario"
+                        >Secretario is required.</small
+                    >
+                </div>
+                <div class="field">
+                    <label for="tesorero">Tesorero</label>
+                    <input
+                        type="text"
+                        pInputText
+                        id="tesorero"
+                        [(ngModel)]="directiva.tesorero"
+                        required
+                        autofocus
+                        [ngClass]="{
+                            'ng-invalid ng-dirty': submitted && !directiva.tesorero
+                        }"
+                    />
+                    <small
+                        class="ng-dirty ng-invalid"
+                        *ngIf="submitted && !directiva.tesorero"
+                        >Tesorero is required.</small
+                    >
+                </div>
+                <div class="field">
+                    <label for="vocal1">Vocal 1</label>
+                    <input
+                        type="text"
+                        pInputText
+                        id="vocal1"
+                        [(ngModel)]="directiva.vocal1"
+                        
+                    />
+                    
+                </div>
+                <div class="field">
+                    <label for="vocal2">Vocal 2</label>
+                    <input
+                        type="text"
+                        pInputText
+                        id="vocal2"
+                        [(ngModel)]="directiva.vocal2"
+                        
+                    />
+                    
+                </div>
+                <div class="field">
+                    <label for="vocal3">Vocal 3</label>
+                    <input
+                        type="text"
+                        pInputText
+                        id="vocal3"
+                        [(ngModel)]="directiva.vocal3"
+                        
+                    />
+                    
+                </div>
+                <div class="field">
+                    <label for="nota">Nota</label>
+                    <textarea
+                        id="nota"
+                        pInputTextarea
+                        [(ngModel)]="directiva.nota"
+                        rows="3"
+                        cols="20"
+                    ></textarea>
+                </div>
+               
+
+                
+
+                
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button
+                    pButton
+                    pRipple
+                    label="Cancel"
+                    icon="pi pi-times"
+                    class="p-button-text"
+                    (click)="hideDialog()"
+                ></button>
+                <button
+                    pButton
+                    pRipple
+                    label="Save"
+                    icon="pi pi-check"
+                    class="p-button-text"
+                    (click)="saveDirectiva()"
+                ></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog
+            [(visible)]="deleteDirectivaDialog"
+            header="Confirm"
+            [modal]="true"
+            [style]="{ width: '450px' }"
+        >
+            <div class="flex align-items-center justify-content-center">
+                <i
+                    class="pi pi-exclamation-triangle mr-3"
+                    style="font-size: 2rem"
+                ></i>
+                <span *ngIf="directiva"
+                    >Are you sure you want to delete <b>{{ directiva.nombre }}</b
+                    >?</span
+                >
+            </div>
+            <ng-template pTemplate="footer">
+                <button
+                    pButton
+                    pRipple
+                    icon="pi pi-times"
+                    class="p-button-text"
+                    label="No"
+                    (click)="deleteDirectivaDialog = false"
+                ></button>
+                <button
+                    pButton
+                    pRipple
+                    icon="pi pi-check"
+                    class="p-button-text"
+                    label="Yes"
+                    (click)="confirmDelete()"
+                ></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog
+            [(visible)]="deleteDirectivasDialog"
+            header="Confirm"
+            [modal]="true"
+            [style]="{ width: '450px' }"
+        >
+            <div class="flex align-items-center justify-content-center">
+                <i
+                    class="pi pi-exclamation-triangle mr-3"
+                    style="font-size: 2rem"
+                ></i>
+                <span>Are you sure you want to delete selected directivas?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button
+                    pButton
+                    pRipple
+                    icon="pi pi-times"
+                    class="p-button-text"
+                    label="No"
+                    (click)="deleteDirectivasDialog = false"
+                ></button>
+                <button
+                    pButton
+                    pRipple
+                    icon="pi pi-check"
+                    class="p-button-text"
+                    label="Yes"
+                    (click)="confirmDeleteSelected()"
+                ></button>
+            </ng-template>
+        </p-dialog>
+    </div>
+</div>
