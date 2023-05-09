@@ -9,9 +9,28 @@ export class FinanzaService {
 
     
     getFinanzas() {
-        return this.http.get<any>('assets/demo/data/finanzas.json')
+        return this.http.get<Finanza[]>('http://localhost:8080/finanzas/')
             .toPromise()
-            .then(res => res.data as Finanza[])
+            .then(data => data);
+    }
+
+    addFinanza(finanza: Finanza) {
+        return this.http.post('http://localhost:8080/finanzas/', finanza)
+            .toPromise()
+            .then(data => data);
+    }
+
+    updateFinanza(finanza: Finanza) {
+        const url = `http://localhost:8080/finanzas/${finanza.codigo}`;
+        return this.http.put(url, finanza)
+            .toPromise()
+            .then(data => data);
+    }
+
+    deleteFinanza(id: number) {
+        const url = `http://localhost:8080/finanzas/${id}`;
+        return this.http.delete(url)
+            .toPromise()
             .then(data => data);
     }
 

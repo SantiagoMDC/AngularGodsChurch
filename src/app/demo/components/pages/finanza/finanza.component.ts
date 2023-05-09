@@ -73,11 +73,12 @@ export class FinanzaComponent implements OnInit {
         }
 
         this.finanzaService.getFinanzas().then((data) => {
+            // @ts-ignore
             this.finanzas = data;
              // @ts-ignore
              this.totalIngreso = this.finanzas.reduce((sum, finanza) => finanza.tipo === 'Ingreso' ? sum + finanza.valor : sum, 0);
              // @ts-ignore
-             this.totalEgreso = this.finanzas.reduce((sum, finanza) => finanza.tipo === 'Egreso' ? sum + finanza.valor : sum, 0);
+             this.totalEgreso = this.finanzas.reduce((sum, finanza) => finanza.tipo === 'EGRESO' ? sum + finanza.valor : sum, 0);
 
             
           });
@@ -152,36 +153,50 @@ export class FinanzaComponent implements OnInit {
 
     saveFinanza() {
         this.submitted = true;
-
+      
         if (this.finanza.descripcion?.trim()) {
-            let fechaActual: Date = new Date(); // Crear un nuevo objeto Date y asignarle la fecha actual del sistema
-            let dia: number = fechaActual.getDate(); // Obtener el día del mes (1-31)
-            let mes: number = fechaActual.getMonth() + 1; // Obtener el mes (0-11) y sumar 1 para que sea 1-12
-            let anio: number = fechaActual.getFullYear(); // Obtener el año con cuatro dígitos
-            let fechaFormateada: string =
-                anio.toString() +
-                '-' +
-                mes.toString().padStart(2, '0') +
-                '-' +
-                dia.toString().padStart(2, '0');
-
-            this.finanza.fecha = fechaFormateada;
-            this.finanza.codigo = this.createId();
+          let fechaActual: Date = new Date(); // Crear un nuevo objeto Date y asignarle la fecha actual del sistema
+          let dia: number = fechaActual.getDate(); // Obtener el día del mes (1-31)
+          let mes: number = fechaActual.getMonth() + 1; // Obtener el mes (0-11) y sumar 1 para que sea 1-12
+          let anio: number = fechaActual.getFullYear(); // Obtener el año con cuatro dígitos
+          let fechaFormateada: string =
+            anio.toString() +
+            '-' +
+            mes.toString().padStart(2, '0') +
+            '-' +
+            dia.toString().padStart(2, '0');
+      
+          this.finanza.fecha = fechaFormateada;
+          this.finanza.codigo = this.createId();
+      
+          this.finanzaService.addFinanza(this.finanza).then((data) => {
             // @ts-ignore
-
-            this.finanzas.push(this.finanza);
-            this.messageService.add({
+            this.finanzas.push(data);
+        
+              this.messageService.add({
                 severity: 'success',
                 summary: 'Successful',
                 detail: 'Finanza Created',
                 life: 3000,
-            });
-
-            this.finanzas = [...this.finanzas];
-            this.finanzaDialog = false;
-            this.finanza = {};
+              });
+      
+              this.finanzas = [...this.finanzas];
+              this.finanzaDialog = false;
+              this.finanza = {};
+            },
+            (error) => {
+              console.log(error);
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Error creating Finanza',
+                life: 3000,
+              });
+            }
+          );
         }
-    }
+      }
+      
 
     findIndexById(id: string): number {
         let index = -1;
@@ -217,6 +232,7 @@ export class FinanzaComponent implements OnInit {
           const fechaInicio = new Date(parseInt(this.anioSeleccionado), parseInt(this.mesSeleccionado) - 1, 1);
           const fechaFin = new Date(parseInt(this.anioSeleccionado), parseInt(this.mesSeleccionado), 0);
           this.finanzaService.getFinanzas().then((data) => {
+            // @ts-ignore
             this.finanzas = data.filter((item) => {
                 // @ts-ignore
               const fechaRegistro = new Date(item.fecha);
