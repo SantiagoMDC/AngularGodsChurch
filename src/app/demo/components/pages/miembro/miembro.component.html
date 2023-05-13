@@ -130,7 +130,7 @@
                         </td>
                         <td style="width: 14%; min-width: 10rem">
                             <span class="p-column-title">Id</span>
-                            {{ miembro.id }}
+                            {{ miembro.identificacion }}
                         </td>
                         <td style="width: 14%; min-width: 10rem">
                             <span class="p-column-title">Nombre</span>
@@ -162,11 +162,11 @@
                             <span
                                 [class]="
                                     'miembro-badge status-' +
-                                    (miembro.miembroStatus
-                                        ? miembro.miembroStatus.toLowerCase()
+                                    (miembro.estado
+                                        ? miembro.estado.toLowerCase()
                                         : '')
                                 "
-                                >{{ miembro.miembroStatus }}</span
+                                >{{ miembro.estado }}</span
                             >
                         </td>
                         <td>
@@ -207,16 +207,16 @@
                         type="text"
                         pInputText
                         id="id"
-                        [(ngModel)]="miembro.id"
+                        [(ngModel)]="miembro.identificacion"
                         required
                         autofocus
                         [ngClass]="{
-                            'ng-invalid ng-dirty': submitted && !miembro.id
+                            'ng-invalid ng-dirty': submitted && !miembro.identificacion
                         }"
                     />
                     <small
                         class="ng-dirty ng-invalid"
-                        *ngIf="submitted && !miembro.id"
+                        *ngIf="submitted && !miembro.identificacion"
                         >Id is required.</small
                     >
                 </div>
@@ -255,22 +255,22 @@
                 <div class="field">
                     <label for="status">Estado</label>
                     <p-dropdown
-                        [(ngModel)]="miembro.miembroStatus"
+                        [(ngModel)]="miembro.estado"
                         inputId="miembroStatus"
                         optionValue="label"
-                        [options]="statuses"
+                        [options]="estados"
                         placeholder="Select"
                     >
                         <ng-template pTemplate="selectedItem">
                             <span
-                                *ngIf="miembro && miembro.miembroStatus"
+                                *ngIf="miembro && miembro.estado"
                                 [class]="
                                     'miembro-badge status-' +
-                                    miembro.miembroStatus
+                                    miembro.estado
                                         .toString()
                                         .toLowerCase()
                                 "
-                                >{{ miembro.miembroStatus }}</span
+                                >{{ miembro.estado }}</span
                             >
                         </ng-template>
                         <ng-template let-option pTemplate="item">

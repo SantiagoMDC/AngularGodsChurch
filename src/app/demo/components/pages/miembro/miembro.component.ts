@@ -30,29 +30,36 @@ export class MiembroComponent implements OnInit{
 
   cols: any[] = [];
 
-  statuses: any[] = [];
+  estados: any[] = [];
 
   rowsPerPageOptions = [5, 10, 20];
 
   constructor(private miembroService: MiembroService, private messageService: MessageService) { }
 
   ngOnInit() {
-      this.miembroService.getMiembros().then(data => this.miembros = data);
-
+        
+    
+    this.miembroService.getMiembros().then(data => {
+        if (data) {
+            
+          this.miembros = data;
+        }
+      });
+      
       this.cols = [
-          { field: 'id', header: 'Id'},
+          { field: 'identificacion', header: 'Identificacion'},
           { field: 'nombre', header: 'Nombre' },
           { field: 'apellido', header: 'Apelllido' },
           { field: 'edad', header: 'Edad'},
           { field: 'telefono', header: 'Telefonoo' },
           { field: 'direccion', header: 'Direccion' },
-          { field: 'miembroStatus', header: 'Estado' },
+          { field: 'estado', header: 'Estado' },
           { field: 'categoria', header: 'Categoria' }
           
           
       ];
 
-      this.statuses = [
+      this.estados = [
           { label: 'ACTIVO', value: 'activo' },
           { label: 'PENDIENTE', value: 'pendiente' },
           { label: 'INACTIVO', value: 'inactivo' }
@@ -79,16 +86,22 @@ export class MiembroComponent implements OnInit{
       this.miembro = { ...miembro };
   }
 
-  confirmDeleteSelected() {
+  async confirmDeleteSelected() {
       this.deleteMiembrosDialog = false;
       this.miembros = this.miembros.filter(val => !this.selectedMiembros.includes(val));
+      for (const miembro of this.selectedMiembros) {
+        await this.miembroService.deleteMiembro(miembro);
+      }
       this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Miembros Deleted', life: 3000 });
       this.selectedMiembros = [];
   }
 
   confirmDelete() {
       this.deleteMiembroDialog = false;
-      this.miembros = this.miembros.filter(val => val.id !== this.miembro.id);
+      this.miembros = this.miembros.filter(val => val.identificacion !== this.miembro.identificacion);
+      //@ts-ignore()
+        this.miembroService.deleteMiembro(this.miembro);
+      
       this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Miembro Deleted', life: 3000 });
       this.miembro = {};
   }
@@ -102,20 +115,21 @@ export class MiembroComponent implements OnInit{
       this.submitted = true;
 
       if (this.miembro.nombre?.trim()) {
-          if (this.miembro.id) {
-              if (this.findIndexById(this.miembro.id) === -1) {
+          if (this.miembro.identificacion) {
+              if (this.findIndexById(this.miembro.identificacion) === -1) {
 
                   // @ts-ignore
-                  this.miembro.miembroStatus = this.miembro.miembroStatus.value ? this.miembro.miembroStatus.value : this.miembro.miembroStatus;
+                  this.miembro.miembroStatus = this.miembro.estado.value ? this.miembro.estado.value : this.miembro.estado;
+                  this.miembroService.addMiembro(this.miembro);
                   this.miembros.push(this.miembro);
-                  this.miembroService.postMiembro(this.miembro);
                   this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Miembro Created', life: 3000 });
                    
               } else {
                   // @ts-ignore
 
-                  this.miembro.miembroStatus = this.miembro.miembroStatus.value ? this.miembro.miembroStatus.value : this.miembro.miembroStatus;
-                  this.miembros[this.findIndexById(this.miembro.id)] = this.miembro;
+                  this.miembro.miembroStatus = this.miembro.estado.value ? this.miembro.estado.value : this.miembro.estado;
+                  this.miembros[this.findIndexById(this.miembro.identificacion)] = this.miembro;
+                  this.miembroService.updateMiembro(this.miembro);
                   this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Miembro Updated', life: 3000 });
                   
               }
@@ -131,7 +145,7 @@ export class MiembroComponent implements OnInit{
   findIndexById(id: string): number {
       let index = -1;
       for (let i = 0; i < this.miembros.length; i++) {
-          if (this.miembros[i].id === id) {
+          if (this.miembros[i].identificacion === id) {
               index = i;
               break;
           }

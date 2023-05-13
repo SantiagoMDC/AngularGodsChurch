@@ -3,12 +3,12 @@ interface MiembroStatus {
     value: string;
 }
 export interface Miembro {
-    id?: string;
+    identificacion?: string;
     nombre?: string;
     apellido?: string;
     edad?: number;
     telefono?: number;
-    miembroStatus?: MiembroStatus;
+    estado?: MiembroStatus;
     categoria?: string;
     direccion?: string;
 }

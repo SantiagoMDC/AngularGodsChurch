@@ -7,39 +7,31 @@ export class MiembroService {
 
     constructor(private http: HttpClient) { }
 
-    getMiembroSmall() {
-        return this.http.get<any>('assets/demo/data/miembros.json')
-            .toPromise()
-            .then(res => res.data as Miembro[])
-            .then(data => data);
-    }
 
     getMiembros() {
-        return this.http.get<any>('assets/demo/data/miembros.json')
+        return this.http.get<Miembro[]>('http://localhost:8080/miembros/')
             .toPromise()
-            .then(res => res.data as Miembro[])
             .then(data => data);
     }
 
-    postMiembro(miembro: Miembro) {
-        return this.http.post<any>('assets/demo/data/miembros.json', miembro)
-        .toPromise()
-        .then(res => res.data as Miembro[])
-        .then(data => data);
-      }
-      
-
-    getMiembroMixed() {
-        return this.http.get<any>('assets/demo/data/miembros.json')
+    addMiembro(miembro: Miembro) {
+        return this.http.post('http://localhost:8080/miembros/', miembro)
             .toPromise()
-            .then(res => res.data as Miembro[])
             .then(data => data);
     }
 
-    getMiembroWithOrdersSmall() {
-        return this.http.get<any>('assets/demo/data/miembros.json')
+    updateMiembro(miembro: Miembro) {
+        const url = `http://localhost:8080/miembros/${miembro.identificacion}`;
+        return this.http.put(url, miembro)
             .toPromise()
-            .then(res => res.data as Miembro[])
+            .then(data => data);
+    }
+
+    deleteMiembro(miembro: Miembro) {
+        const url = `http://localhost:8080/miembros/${miembro.identificacion}`;
+       
+        return this.http.delete(url)
+            .toPromise()
             .then(data => data);
     }
 }
