@@ -33,6 +33,7 @@ export class DirectivaComponent implements OnInit {
   constructor(private directivaService: DirectivaService, private messageService: MessageService) { }
 
   ngOnInit() {
+    //@ts-ignore()
       this.directivaService.getDirectivas().then(data => this.directivas = data);
 
       
@@ -58,9 +59,12 @@ export class DirectivaComponent implements OnInit {
       this.directiva = { ...directiva };
   }
 
-  confirmDeleteSelected() {
+  async confirmDeleteSelected() {
       this.deleteDirectivasDialog = false;
       this.directivas = this.directivas.filter(val => !this.selectedDirectivas.includes(val));
+      for (const directiva of this.selectedDirectivas) {
+        await this.directivaService.deleteDirectiva(directiva);
+      }
       this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Directivas Deleted', life: 3000 });
       this.selectedDirectivas = [];
   }
@@ -68,6 +72,8 @@ export class DirectivaComponent implements OnInit {
   confirmDelete() {
       this.deleteDirectivaDialog = false;
       this.directivas = this.directivas.filter(val => val.codigo !== this.directiva.codigo);
+      //@ts-ignore()
+      this.miembroService.deleteMiembro(this.miembro);
       this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Directiva Deleted', life: 3000 });
       this.directiva = {};
   }
@@ -79,27 +85,35 @@ export class DirectivaComponent implements OnInit {
 
   saveDirectiva() {
       this.submitted = true;
-
+    
       if (this.directiva.nombre?.trim()) {
-          if (this.directiva.codigo) {
-              // @ts-ignore
-              this.directivas[this.findIndexById(this.directiva.codigo)] = this.directiva;
-              this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Directiva Updated', life: 3000 });
-          } else {
-              
-            this.directiva.codigo = this.createId();
-              // @ts-ignore
-              this.directivas.push(this.directiva);
-              this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Directiva Created', life: 3000 });
-          }
+        // @ts-ignore
+            if (this.findIndexById(this.directiva.codigo) === -1) {
 
-          this.directivas = [...this.directivas];
-          this.directivaDialog = false;
-          this.directiva = {};
-      }
+                // @ts-ignore
+               this.directiva.codigo = this.createId();
+               console.log(this.directiva);
+                this.directivaService.addDirectiva(this.directiva);
+                this.directivas.push(this.directiva);
+                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Directiva Created', life: 3000 });
+                 
+            } else {
+                // @ts-ignore
+
+                this.directivas[this.findIndexById(this.directiva.codigo)] = this.directiva;
+                this.directivaService.updateDirectiva(this.directiva);
+                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Directiva Updated', life: 3000 });
+                
+            }
+            
+
+        this.directivas = [...this.directivas];
+        this.directivaDialog = false;
+        this.directiva = {};
+    }
   }
 
-  findIndexById(id: string): number {
+  findIndexById(id: number): number {
       let index = -1;
       for (let i = 0; i < this.directivas.length; i++) {
           if (this.directivas[i].codigo === id) {
@@ -111,11 +125,11 @@ export class DirectivaComponent implements OnInit {
       return index;
   }
 
-  createId(): string {
-      let id = '';
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  createId(): number {
+      let id = 0;
+      const chars = '0123456789';
       for (let i = 0; i < 5; i++) {
-          id += chars.charAt(Math.floor(Math.random() * chars.length));
+          id += parseInt(chars.charAt(Math.floor(Math.random() * chars.length)));
       }
       return id;
   }

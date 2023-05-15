@@ -1,5 +1,5 @@
 export interface Directiva {
-    codigo?: string;
+    codigo?: number;
     nombre?: string;
     lider?: string;
     sublider?: string;
