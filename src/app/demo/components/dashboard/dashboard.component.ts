@@ -4,6 +4,9 @@ import { Product } from '../../api/product';
 import { ProductService } from '../../service/product.service';
 import { Subscription } from 'rxjs';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
+import { DirectivaService } from '../../service/directiva.service';
+import { Directiva } from '../../api/directiva';
+import { count } from 'console';
 
 @Component({
     templateUrl: './dashboard.component.html',
@@ -13,14 +16,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
     items!: MenuItem[];
 
     products!: Product[];
+    
+    directivas: Directiva[] = [];
+
+    directiva: Directiva = {};
 
     chartData: any;
 
     chartOptions: any;
 
     subscription!: Subscription;
+    totalRegistros: any;
 
-    constructor(private productService: ProductService, public layoutService: LayoutService) {
+    constructor(private directivaService: DirectivaService,private productService: ProductService, public layoutService: LayoutService) {
         this.subscription = this.layoutService.configUpdate$.subscribe(() => {
             this.initChart();
         });
@@ -29,7 +37,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.initChart();
         this.productService.getProductsSmall().then(data => this.products = data);
-
+        
+        this.directivaService.getDirectivas().then(data => {
+            //@ts-ignore()
+            this.directivas = data;
+            this.totalRegistros = this.directivas.length;
+          });
         this.items = [
             { label: 'Add New', icon: 'pi pi-fw pi-plus' },
             { label: 'Remove', icon: 'pi pi-fw pi-minus' }
