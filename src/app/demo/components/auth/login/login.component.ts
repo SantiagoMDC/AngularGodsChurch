@@ -28,6 +28,11 @@ export class LoginComponent {
     
     constructor(private authService: AuthService, private router: Router) { }
 
+    login() {
+      console.log(this.correo);
+      console.log(this.contrasena);
+    }
+
     iniciarSesion(): void {
       if (this.authService.autenticar(this.correo, this.contrasena)) {
         this.router.navigate(['/']);

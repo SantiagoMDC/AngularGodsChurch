@@ -43,6 +43,7 @@
                         [(ngModel)]="correo"
                         type="email"
                         placeholder="Email address"
+                        required="required"
                         pInputText
                         class="w-full md:w-30rem mb-5"
                         style="padding: 1rem"
@@ -57,6 +58,7 @@
                         id="password1"
                         [(ngModel)]="contrasena"
                         placeholder="Password"
+                        required="required"
                         [toggleMask]="true"
                         styleClass="mb-5"
                         inputStyleClass="w-full p-3 md:w-30rem"
@@ -84,7 +86,7 @@
                         pRipple
                         label="Sign In"
                         class="w-full p-3 text-xl"
-                        (click)="iniciarSesion()"
+                        (click)="login()"
                     ></button>
                 </div>
             </div>
