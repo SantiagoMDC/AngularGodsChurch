@@ -7,6 +7,8 @@ import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { DirectivaService } from '../../service/directiva.service';
 import { Directiva } from '../../api/directiva';
 import { count } from 'console';
+import { Miembro } from '../../api/miembro';
+import { MiembroService } from '../../service/miembro.service';
 
 @Component({
     templateUrl: './dashboard.component.html',
@@ -21,14 +23,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     directiva: Directiva = {};
 
+    miembros: Miembro[] = [];
+
+    miembro: Miembro = {};
+
     chartData: any;
 
     chartOptions: any;
 
     subscription!: Subscription;
     totalRegistros: any;
+    totalMiembros: any;
 
-    constructor(private directivaService: DirectivaService,private productService: ProductService, public layoutService: LayoutService) {
+    constructor(private miembroService: MiembroService,private directivaService: DirectivaService,private productService: ProductService, public layoutService: LayoutService) {
         this.subscription = this.layoutService.configUpdate$.subscribe(() => {
             this.initChart();
         });
@@ -42,7 +49,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
             //@ts-ignore()
             this.directivas = data;
             this.totalRegistros = this.directivas.length;
-          });
+        });
+
+        this.miembroService.getMiembros().then(data => {
+            //@ts-ignore()
+            this.miembros = data;
+            this.totalMiembros = this.miembros.length;
+        });
         this.items = [
             { label: 'Add New', icon: 'pi pi-fw pi-plus' },
             { label: 'Remove', icon: 'pi pi-fw pi-minus' }
