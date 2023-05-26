@@ -28,10 +28,27 @@ export class LoginComponent {
     
     constructor(private authService: AuthService, private router: Router) { }
 
-    login() {
-      console.log(this.correo);
-      console.log(this.contrasena);
+    onLogin() {
+      const user = {
+        username: this.correo,
+        password: this.contrasena
+      };
+    
+      this.authService.login(user).subscribe(
+        (token: string) => {
+          
+          console.log('Inicio de sesión exitoso');
+          console.log('Token:', token);
+          this.router.navigate(['/']);
+    
+          
+        },
+        (error: any) => {
+          this.router.navigate(['/auth/access']);
+        }
+      );
     }
+    
 
     iniciarSesion(): void {
       if (this.authService.autenticar(this.correo, this.contrasena)) {

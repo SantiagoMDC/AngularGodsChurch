@@ -12,7 +12,7 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   login(user: any): Observable<string> {
-    return this.http.post('http://localhost:8080/login', user).pipe(
+    return this.http.post('https://reqres.in/api/login', user).pipe(
       map((response: any) => {
         // Aquí obtienes el token del backend
         const token = response.token;

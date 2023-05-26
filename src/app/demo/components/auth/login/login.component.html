@@ -34,12 +34,12 @@
 
                 <div>
                     <label
-                        for="email1"
+                        for="correo"
                         class="block text-900 text-xl font-medium mb-2"
                         >Email</label
                     >
                     <input
-                        id="email1"
+                        id="correo"
                         [(ngModel)]="correo"
                         type="email"
                         placeholder="Email address"
@@ -50,12 +50,12 @@
                     />
 
                     <label
-                        for="password1"
+                        for="contrasena"
                         class="block text-900 font-medium text-xl mb-2"
                         >Password</label
                     >
                     <p-password
-                        id="password1"
+                        id="contrasena"
                         [(ngModel)]="contrasena"
                         placeholder="Password"
                         required="required"
@@ -86,7 +86,7 @@
                         pRipple
                         label="Sign In"
                         class="w-full p-3 text-xl"
-                        (click)="login()"
+                        (click)="onLogin()"
                     ></button>
                 </div>
             </div>
