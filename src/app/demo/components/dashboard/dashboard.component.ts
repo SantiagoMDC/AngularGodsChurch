@@ -4,6 +4,13 @@ import { Product } from '../../api/product';
 import { ProductService } from '../../service/product.service';
 import { Subscription } from 'rxjs';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
+import { DirectivaService } from '../../service/directiva.service';
+import { Directiva } from '../../api/directiva';
+import { count } from 'console';
+import { Miembro } from '../../api/miembro';
+import { MiembroService } from '../../service/miembro.service';
+import { Finanza } from '../../api/finanza';
+import { FinanzaService } from '../../service/finanza.service';
 
 @Component({
     templateUrl: './dashboard.component.html',
@@ -13,27 +20,66 @@ export class DashboardComponent implements OnInit, OnDestroy {
     items!: MenuItem[];
 
     products!: Product[];
+    
+    directivas: Directiva[] = [];
+
+    directiva: Directiva = {};
+
+    miembros: Miembro[] = [];
+
+    miembro: Miembro = {};
+
+    finanza: Finanza = {};
+
+    finanzas: Finanza[] = [];
 
     chartData: any;
 
     chartOptions: any;
 
     subscription!: Subscription;
+    totalRegistros: any;
+    totalMiembros: any;
+    totalIngresos:any;
+    totalEgresos:any;
 
-    constructor(private productService: ProductService, public layoutService: LayoutService) {
+    constructor(private miembroService: MiembroService,private directivaService: DirectivaService,private finanzaService: FinanzaService,private productService: ProductService, public layoutService: LayoutService) {
         this.subscription = this.layoutService.configUpdate$.subscribe(() => {
             this.initChart();
         });
     }
 
     ngOnInit() {
+        this.totalEgresos = 0;
+        this.totalIngresos = 0;
+        this.totalMiembros = 0;
+        this.totalRegistros = 0;
+
         this.initChart();
         this.productService.getProductsSmall().then(data => this.products = data);
+        
+        this.directivaService.getDirectivas().then(data => {
+            //@ts-ignore()
+            this.directivas = data;
+            this.totalRegistros = this.directivas.length;
+        });
 
-        this.items = [
-            { label: 'Add New', icon: 'pi pi-fw pi-plus' },
-            { label: 'Remove', icon: 'pi pi-fw pi-minus' }
-        ];
+        this.miembroService.getMiembros().then(data => {
+            //@ts-ignore()
+            this.miembros = data;
+            this.totalMiembros = this.miembros.length;
+        });
+
+        this.finanzaService.getFinanzas().then((data) => {
+            // @ts-ignore
+            this.finanzas = data;
+             // @ts-ignore
+             this.totalIngresos = this.finanzas.reduce((sum, finanza) => finanza.tipo === 'Ingreso' ? sum + finanza.valor : sum, 0);
+             // @ts-ignore
+             this.totalEgresos = this.finanzas.reduce((sum, finanza) => finanza.tipo === 'EGRESO' ? sum + finanza.valor : sum, 0);
+
+            
+          });
     }
 
     initChart() {
