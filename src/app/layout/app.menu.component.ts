@@ -56,11 +56,11 @@ export class AppMenuComponent implements OnInit {
                 ]
             },
             */{
-                label: 'Miembros',
+                label: 'GESTIONAR',
                 icon: 'pi pi-fw pi-briefcase',
                 items: [
                     
-                    {
+                   /* {
                         label: 'Auth',
                         icon: 'pi pi-fw pi-user',
                         items: [
@@ -85,7 +85,7 @@ export class AppMenuComponent implements OnInit {
                         label: 'Crud',
                         icon: 'pi pi-fw pi-pencil',
                         routerLink: ['pages/crud']
-                    },
+                    },*/
                     {
                         label: 'Miembros',
                         icon: 'pi pi-fw pi-users',
@@ -93,7 +93,7 @@ export class AppMenuComponent implements OnInit {
                     },
                     {
                         label: 'Directivas',
-                        icon: 'pi pi-fw pi-exclamation-circle',
+                        icon: 'fas fa-users',
                         routerLink: ['/pages/directiva']
                     },
                     {
@@ -103,7 +103,7 @@ export class AppMenuComponent implements OnInit {
                     },
                 ]
             },
-            {
+           /* {
                 label: 'Hierarchy',
                 items: [
                     {
@@ -144,15 +144,15 @@ export class AppMenuComponent implements OnInit {
                         ]
                     }
                 ]
-            },
+            },*/
             {
-                label: 'Get Started',
+                label: 'ACERCA DE',
                 items: [
                     {
                         label: 'Documentation', icon: 'pi pi-fw pi-question', routerLink: ['/documentation']
                     },
                     {
-                        label: 'View Source', icon: 'pi pi-fw pi-search', url: ['https://github.com/primefaces/sakai-ng'], target: '_blank'
+                        label: 'View Source', icon: 'pi pi-fw pi-search', url: ['https://github.com/SantiagoMDC/AngularGodsChurch'], target: '_blank'
                     }
                 ]
             }

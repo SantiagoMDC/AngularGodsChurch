@@ -32,6 +32,8 @@ import { CrudRoutingModule } from './demo/components/pages/crud/crud-routing.mod
 import { MiembroService } from './demo/service/miembro.service';
 import { FinanzaService } from './demo/service/finanza.service';
 import { LoginRoutingModule } from './demo/components/auth/login/login-routing.module';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthInterceptor } from './demo/service/authInterceptor';
 
 @NgModule({
     declarations: [
@@ -56,10 +58,11 @@ import { LoginRoutingModule } from './demo/components/auth/login/login-routing.m
         DropdownModule,
         RadioButtonModule,
         InputNumberModule,
-        DialogModule
+        DialogModule,
+        HttpClientModule
     ],
     providers: [
-        { provide: LocationStrategy, useClass: HashLocationStrategy },
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi:true },
         CountryService, CustomerService, EventService, IconService, NodeService,
         PhotoService, ProductService, MiembroService,FinanzaService
     ],
