@@ -37,8 +37,6 @@ export class LoginComponent {
       this.authService.login(user).subscribe(
         (token: string) => {
           
-          console.log('Inicio de sesión exitoso');
-          console.log('Token:', token);
           this.router.navigate(['/']);
     
           

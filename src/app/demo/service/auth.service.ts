@@ -26,6 +26,11 @@ export class AuthService {
       })
     );
   }
+  isLoggedIn(): boolean {
+    // Verificar si el token existe en el localStorage o si hay alguna lógica de autenticación
+    const token = localStorage.getItem('Authorization');;
+    return !!token; // Devuelve true si el token existe, false en caso contrario
+  }
   getToken(): string {
     //@ts-ignore()
     return localStorage.getItem(this.tokenKey); // Obtener el token del localStorage

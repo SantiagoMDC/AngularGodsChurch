@@ -34,6 +34,7 @@ import { FinanzaService } from './demo/service/finanza.service';
 import { LoginRoutingModule } from './demo/components/auth/login/login-routing.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './demo/service/authInterceptor';
+import { AuthGuard } from './auth.guard';
 
 @NgModule({
     declarations: [
@@ -61,7 +62,7 @@ import { AuthInterceptor } from './demo/service/authInterceptor';
         DialogModule,
         HttpClientModule
     ],
-    providers: [
+    providers: [AuthGuard,
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi:true },
         CountryService, CustomerService, EventService, IconService, NodeService,
         PhotoService, ProductService, MiembroService,FinanzaService
