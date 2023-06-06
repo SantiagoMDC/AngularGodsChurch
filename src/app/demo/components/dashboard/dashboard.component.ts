@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { Product } from '../../api/product';
 import { ProductService } from '../../service/product.service';
 import { Subscription } from 'rxjs';
@@ -11,9 +11,13 @@ import { Miembro } from '../../api/miembro';
 import { MiembroService } from '../../service/miembro.service';
 import { Finanza } from '../../api/finanza';
 import { FinanzaService } from '../../service/finanza.service';
+import { Table } from 'primeng/table';
+import { DialogModule } from 'primeng/dialog';
+
 
 @Component({
     templateUrl: './dashboard.component.html',
+    providers: [MessageService]
 })
 export class DashboardComponent implements OnInit, OnDestroy {
 
@@ -43,11 +47,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
     totalIngresos:any;
     totalEgresos:any;
 
+    miembroDialog: boolean = false;
+    submitted: boolean = false;
+    estados: any[] = [];
+    cols: any[] = [];
+
     constructor(private miembroService: MiembroService,private directivaService: DirectivaService,private finanzaService: FinanzaService,private productService: ProductService, public layoutService: LayoutService) {
         this.subscription = this.layoutService.configUpdate$.subscribe(() => {
             this.initChart();
         });
     }
+    
 
     ngOnInit() {
         this.totalEgresos = 0;
@@ -80,7 +90,28 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
             
           });
+
+          this.cols = [
+            { field: 'identificacion', header: 'Identificacion'},
+            { field: 'nombre', header: 'Nombre' },
+            { field: 'apellido', header: 'Apelllido' },
+            { field: 'edad', header: 'Edad'},
+            { field: 'telefono', header: 'Telefonoo' },
+            { field: 'direccion', header: 'Direccion' },
+            { field: 'estado', header: 'Estado' },
+            { field: 'categoria', header: 'Categoria' }
+            
+            
+        ];
+  
+        this.estados = [
+            { label: 'ACTIVO', value: 'activo' },
+            { label: 'PENDIENTE', value: 'pendiente' },
+            { label: 'INACTIVO', value: 'inactivo' }
+        ];
     }
+
+    
 
     initChart() {
         const documentStyle = getComputedStyle(document.documentElement);
@@ -146,4 +177,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
             this.subscription.unsubscribe();
         }
     }
+
+    hideDialog() {
+        this.miembroDialog = false;
+        this.submitted = false;
+    }
+
+    viewMiembro(miembro: Miembro) {
+        this.miembro = { ...miembro };
+        this.miembroDialog = true;
+    }
+
 }

@@ -6,7 +6,9 @@
                     <span class="block text-500 font-medium mb-3"
                         >Miembros</span
                     >
-                    <div class="text-900 font-medium text-xl">{{totalMiembros}}</div>
+                    <div class="text-900 font-medium text-xl">
+                        {{ totalMiembros }}
+                    </div>
                 </div>
                 <div
                     class="flex align-items-center justify-content-center bg-blue-100 border-round"
@@ -44,7 +46,9 @@
                     <span class="block text-500 font-medium mb-3"
                         >Ingresos</span
                     >
-                    <div class="text-900 font-medium text-xl">{{totalIngresos|currency:"COP "}}</div>
+                    <div class="text-900 font-medium text-xl">
+                        {{ totalIngresos | currency : "COP " }}
+                    </div>
                 </div>
                 <div
                     class="flex align-items-center justify-content-center bg-green-100 border-round"
@@ -55,12 +59,14 @@
             </div>
         </div>
     </div>
-    <div class="col-12 lg:col-6 xl:col-3" >
+    <div class="col-12 lg:col-6 xl:col-3">
         <div class="card mb-0">
             <div class="flex justify-content-between mb-3">
                 <div>
                     <span class="block text-500 font-medium mb-3">Egresos</span>
-                    <div class="text-900 font-medium text-xl">{{totalEgresos|currency:"COP " }}</div>
+                    <div class="text-900 font-medium text-xl">
+                        {{ totalEgresos | currency : "COP " }}
+                    </div>
                 </div>
                 <div
                     class="flex align-items-center justify-content-center bg-red-100 border-round"
@@ -113,12 +119,12 @@
                 </ng-template>
             </p-table>
         </div>
-    </div>  
+    </div>
     <div class="col-12 xl:col-6">
         <div class="card">
             <h5>Miembros</h5>
             <p-table
-                [value]="miembros" 
+                [value]="miembros"
                 [paginator]="true"
                 [rows]="5"
                 responsiveLayout="scroll"
@@ -149,6 +155,7 @@
                                 type="button"
                                 icon="pi pi-search"
                                 class="p-button p-component p-button-text p-button-icon-only"
+                                (click)="viewMiembro(miembros)"
                             ></button>
                         </td>
                     </tr>
@@ -156,5 +163,172 @@
             </p-table>
         </div>
 
+        <p-dialog
+            [(visible)]="miembroDialog"
+            [style]="{ width: '450px' }"
+            header="Miembro Details"
+            [modal]="true"
+            class="p-fluid"
+        >
+            <ng-template pTemplate="content">
+                <div class="field">
+                    <label for="id">Id</label>
+                    <input
+                        type="text"
+                        pInputText
+                        id="id"
+                        [(ngModel)]="miembro.identificacion"
+                        required
+                        autofocus
+                        [ngClass]="{
+                            'ng-invalid ng-dirty':
+                                submitted && !miembro.identificacion
+                        }"
+                        [readonly]="true"
+                [disabled]="true"
+                    />
+                    <small
+                        class="ng-dirty ng-invalid"
+                        *ngIf="submitted && !miembro.identificacion"
+                        >Id is required.</small
+                    >
+                </div>
+                <div class="field">
+                    <label for="nombre">Nombre</label>
+                    <input
+                        type="text"
+                        pInputText
+                        id="nombre"
+                        [(ngModel)]="miembro.nombre"
+                        required
+                        autofocus
+                        [ngClass]="{
+                            'ng-invalid ng-dirty': submitted && !miembro.nombre
+                        }"
+                        [readonly]="true"
+                [disabled]="true"
+                    />
+                    <small
+                        class="ng-dirty ng-invalid"
+                        *ngIf="submitted && !miembro.nombre"
+                        >Name is required.</small
+                    >
+                </div>
+                <div class="field">
+                    <label for="apellido">Apellido</label>
+                    <textarea
+                        id="apellido"
+                        pInputTextarea
+                        [(ngModel)]="miembro.apellido"
+                        required
+                        autofocus
+                        [ngClass]="{
+                            'ng-invalid ng-dirty':
+                                submitted && !miembro.apellido
+                        }"
+                        [readonly]="true"
+                [disabled]="true"
+                    ></textarea>
+                </div>
+                <div class="field">
+                    <label for="status">Estado</label>
+                    <p-dropdown
+                        [(ngModel)]="miembro.estado"
+                        inputId="miembroStatus"
+                        optionValue="label"
+                        [options]="estados"
+                        placeholder="Select"
+                [disabled]="true"
+                    >
+                        <ng-template pTemplate="selectedItem">
+                            <span
+                                *ngIf="miembro && miembro.estado"
+                                [class]="
+                                    'miembro-badge status-' +
+                                    miembro.estado.toString().toLowerCase()
+                                "
+                                >{{ miembro.estado }}</span
+                            >
+                        </ng-template>
+                        <ng-template let-option pTemplate="item">
+                            <span
+                                [class]="'miembro-badge status-' + option.value"
+                                >{{ option.label }}</span
+                            >
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+
+                <div class="field">
+                    <label class="mb-3">Categoria</label>
+                    <div class="formgrid grid">
+                        <div class="field-radiobutton col-6">
+                            <p-radioButton
+                                id="categoria1"
+                                name="categoria"
+                                value="Servidor"
+                                [(ngModel)]="miembro.categoria"
+                                [disabled]="true"
+                            ></p-radioButton>
+                            <label for="categoria1">Servidor</label>
+                        </div>
+                        <div class="field-radiobutton col-6">
+                            <p-radioButton
+                                id="categoria2"
+                                name="categoria"
+                                value="Bautizado"
+                                [(ngModel)]="miembro.categoria"
+                                [disabled]="true"
+                            ></p-radioButton>
+                            <label for="categoria2">Bautizado</label>
+                        </div>
+                        <div class="field-radiobutton col-6">
+                            <p-radioButton
+                                id="categoria3"
+                                name="categoria"
+                                value="Asistente"
+                                [(ngModel)]="miembro.categoria"
+                                [disabled]="true"
+                            ></p-radioButton>
+                            <label for="categoria3">Asistente</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label for="telefono">Telefono</label>
+                        <p-inputNumber
+                            id="telefono"
+                            [(ngModel)]="miembro.telefono"
+                            [disabled]="true"
+                        ></p-inputNumber>
+                    </div>
+                    <div class="field col">
+                        <label for="edad">Edad</label>
+                        <p-inputNumber
+                            id="edad"
+                            [(ngModel)]="miembro.edad"
+                            [disabled]="true"
+                        ></p-inputNumber>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="direccion">Direccion</label>
+                    <textarea
+                        id="direccion"
+                        pInputTextarea
+                        [(ngModel)]="miembro.direccion"
+                        required
+                        autofocus
+                        [ngClass]="{
+                            'ng-invalid ng-dirty':
+                                submitted && !miembro.direccion
+                        }"
+                        [disabled]="true"
+                    ></textarea>
+                </div>
+            </ng-template>
+        </p-dialog>
     </div>
-</div>   
+</div>
