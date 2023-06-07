@@ -48,6 +48,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     totalEgresos:any;
 
     miembroDialog: boolean = false;
+    directivaDialog: boolean = false;
     submitted: boolean = false;
     estados: any[] = [];
     cols: any[] = [];
@@ -186,6 +187,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
     viewMiembro(miembro: Miembro) {
         this.miembro = { ...miembro };
         this.miembroDialog = true;
+    }
+
+    viewDirectiva(directiva: Directiva) {
+        this.directiva = { ...directiva };
+        this.directivaDialog = true;
     }
 
 }
