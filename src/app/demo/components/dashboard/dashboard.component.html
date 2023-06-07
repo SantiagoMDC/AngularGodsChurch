@@ -113,6 +113,7 @@
                                 type="button"
                                 icon="pi pi-search"
                                 class="p-button p-component p-button-text p-button-icon-only"
+                                (click)="viewDirectiva(directiva)"
                             ></button>
                         </td>
                     </tr>
@@ -329,6 +330,160 @@
                     ></textarea>
                 </div>
             </ng-template>
+        </p-dialog>
+        
+        <p-dialog
+            [(visible)]="directivaDialog"
+            [style]="{ width: '450px' }"
+            header="Directiva Details"
+            [modal]="true"
+            class="p-fluid"
+        >
+            <ng-template pTemplate="content">
+                
+                <div class="field">
+                    <label for="nombre">Nombre</label>
+                    <input
+                        type="text"
+                        pInputText
+                        id="nombre"
+                        [(ngModel)]="directiva.nombre"
+                        required
+                        autofocus
+                        [ngClass]="{
+                            'ng-invalid ng-dirty': submitted && !directiva.nombre
+                        }"
+                        [disabled]="true"
+                    />
+                    <small
+                        class="ng-dirty ng-invalid"
+                        *ngIf="submitted && !directiva.nombre"
+                        >Nombre is required.</small
+                    >
+                </div>
+                <div class="field">
+                    <label for="lider">Lider</label>
+                    <input
+                        type="text"
+                        pInputText
+                        id="lider"
+                        [(ngModel)]="directiva.lider"
+                        required
+                        autofocus
+                        [ngClass]="{
+                            'ng-invalid ng-dirty': submitted && !directiva.lider
+                        }"
+                        [disabled]="true"
+                    />
+                    <small
+                        class="ng-dirty ng-invalid"
+                        *ngIf="submitted && !directiva.lider"
+                        >Lider is required.</small
+                    >
+                </div>
+                <div class="field">
+                    <label for="sublider">sublider</label>
+                    <input
+                        type="text"
+                        pInputText
+                        id="sublider"
+                        [(ngModel)]="directiva.sublider"
+                        [disabled]="true"
+                    />
+                    
+                </div>
+                <div class="field">
+                    <label for="secretario">Secretario</label>
+                    <input
+                        type="text"
+                        pInputText
+                        id="secretario"
+                        [(ngModel)]="directiva.secretario"
+                        required
+                        autofocus
+                        [ngClass]="{
+                            'ng-invalid ng-dirty': submitted && !directiva.secretario
+                        }"
+                        [disabled]="true"
+                    />
+                    <small
+                        class="ng-dirty ng-invalid"
+                        *ngIf="submitted && !directiva.secretario"
+                        >Secretario is required.</small
+                    >
+                </div>
+                <div class="field">
+                    <label for="tesorero">Tesorero</label>
+                    <input
+                        type="text"
+                        pInputText
+                        id="tesorero"
+                        [(ngModel)]="directiva.tesorero"
+                        required
+                        autofocus
+                        [ngClass]="{
+                            'ng-invalid ng-dirty': submitted && !directiva.tesorero
+                        }"
+                        [disabled]="true"
+                    />
+                    <small
+                        class="ng-dirty ng-invalid"
+                        *ngIf="submitted && !directiva.tesorero"
+                        >Tesorero is required.</small
+                    >
+                </div>
+                <div class="field">
+                    <label for="vocal1">Vocal 1</label>
+                    <input
+                        type="text"
+                        pInputText
+                        id="vocal1"
+                        [(ngModel)]="directiva.vocal1"
+                        [disabled]="true"
+                    />
+                    
+                </div>
+                <div class="field">
+                    <label for="vocal2">Vocal 2</label>
+                    <input
+                        type="text"
+                        pInputText
+                        id="vocal2"
+                        [(ngModel)]="directiva.vocal2"
+                        [disabled]="true"
+                    />
+                    
+                </div>
+                <div class="field">
+                    <label for="vocal3">Vocal 3</label>
+                    <input
+                        type="text"
+                        pInputText
+                        id="vocal3"
+                        [(ngModel)]="directiva.vocal3"
+                        [disabled]="true"
+                    />
+                    
+                </div>
+                <div class="field">
+                    <label for="nota">Nota</label>
+                    <textarea
+                        id="nota"
+                        pInputTextarea
+                        [(ngModel)]="directiva.nota"
+                        rows="3"
+                        cols="20"
+                        [disabled]="true"
+                    ></textarea>
+                </div>
+               
+
+                
+
+                
+            </ng-template>
+
+            
         </p-dialog>
     </div>
 </div>
