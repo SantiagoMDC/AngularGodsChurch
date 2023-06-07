@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, map } from 'rxjs';
+import { LoginComponent } from '../components/auth/login/login.component';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +12,8 @@ export class AuthService {
   private readonly contrasena = '12345';
   private readonly tokenKey = 'auth_token';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private router:Router) { }
 
   login(user: any): Observable<string> {
     return this.http.post('http://localhost:8080/generate-token', user).pipe(
@@ -38,4 +41,7 @@ export class AuthService {
   autenticar(correo: string, contrasena: string): boolean {
     return correo === this.correo && contrasena === this.contrasena;
   }
+
+
+
 }
