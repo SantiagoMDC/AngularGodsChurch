@@ -11,4 +11,5 @@ export interface Miembro {
     estado?: MiembroStatus;
     categoria?: string;
     direccion?: string;
+    correo?:string;
 }

@@ -53,6 +53,7 @@ export class MiembroComponent implements OnInit{
           { field: 'edad', header: 'Edad'},
           { field: 'telefono', header: 'Telefonoo' },
           { field: 'direccion', header: 'Direccion' },
+          { field: 'correo', header: 'Correo'},
           { field: 'estado', header: 'Estado' },
           { field: 'categoria', header: 'Categoria' }
           
